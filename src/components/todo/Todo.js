@@ -1,29 +1,41 @@
-import React from 'react';
-import { Button } from 'react-bootstrap';
 import styled from 'styled-components';
 import './Todo.css';
 import { TodoForm } from './TodoForm';
 import { TodoList } from './TodoList';
+import React from 'react';
 
 const Container = styled.main`
-  padding: 20px;
-  background: #efefef;
-  max-width: 400px;
-  margin:  50px auto 0 auto;
+ 
 `;
 
+ 
+
 export const Todo = () => {
+  // State
+  // UseEffect
+
   return (
     <>
       <Container className='todo-list-container'>
-            {/* Form */}
-                <TodoForm />
-                <TodoList />
-            {/* Listing */}
+          <TodoForm /> 
       </Container>
     </>
   )
 }
+
+// state less components
+// function ()
+// useState
+
+// 16.8
+// state
+// // State component
+// state full / component
+// class Todo extends React.Component {
+//   render() {
+//     return <h1>Hello, {this.props.name}!</h1>;
+//   }
+// };
 
 
 // Style Component
