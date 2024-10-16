@@ -5,7 +5,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #ccc;
+  background-color: #ccc;
+  background-image: url('https://images.freeimages.com/images/large-previews/56d/peacock-1169961.jpg')
+  ;
 }
 
 code {
