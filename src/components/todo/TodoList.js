@@ -1,19 +1,62 @@
-import React from 'react'; 
+import React from 'react';
 import styled from 'styled-components';
 import './Todo.css';
+import { dummyTodoData } from './dummyData';
+import Button from '../Button';
 
 const Container = styled.main`
   padding: 20px;
   background: #efefef;
-  max-width: 400px;
+  max-width: 700px;
   margin:  50px auto 0 auto;
 `;
 
-export const TodoList = () => {
+const ListItem = styled.div`
+  padding: 10px;
+  border: 1px solid #ccc; 
+  border-radius: 4px;
+  margin-bottom: 15px;
+`;
+
+const Tag = styled.span`
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  display: inline-block;
+  border-radius: 50px;
+`;
+
+export const TodoList = ({}) => {
+
+  const todos = dummyTodoData;
+  console.log('todos', todos)
+
+  // ?. Optional Chaining
+  // Key with Map
+  // 1. pass item id as key <ListItem key={todo.id}>
+  // 2. with litrals and key <ListItem key={`todo_item${index}`}>
+  // 3. generic id | index + title
+
   return (
     <>
       <Container className='todo-list-container'>
-          List
+        {
+          todos && todos.length > 0 && todos.map((todo, index) => {
+
+            const todoTitle = todo?.title;
+            const tag = todo?.completed ? "Completed" : "Todo";
+
+            return <ListItem key={index + todo.title}>
+              <div> <h4>{todoTitle}</h4>
+                <Tag>{tag}</Tag></div>
+              <div><Button>Edit</Button>
+                <Button>Delete</Button></div>
+            </ListItem>
+          })
+        }
+
+        { todos && todos.length === 0 && <div>
+              You don't have any task yet.
+            </div>}
       </Container>
     </>
   )

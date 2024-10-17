@@ -18,6 +18,7 @@ export const Todo = () => {
     <>
       <Container className='todo-list-container'>
           <TodoForm /> 
+          <TodoList />
       </Container>
     </>
   )

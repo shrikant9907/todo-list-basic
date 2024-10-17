@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './App.css';  
 import Button from './components/Button';
 import Modal from './components/Modal';
+import { Todo } from './components/todo/Todo';
 
 function App() {
 
@@ -48,6 +49,7 @@ function App() {
         </div>
       </Modal>
      
+     <Todo />
     </>
   );
 }
