@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import './Todo.css';
 import { dummyTodoData } from './dummyData';
 import Button from '../Button';
+import { MyThemeContext } from '../../App';
 
 const Container = styled.main`
   padding: 20px;
@@ -27,8 +28,12 @@ const Tag = styled.span`
 
 export const TodoList = ({}) => {
 
+  // Receiving Context Datav (3)
+  const myTheme = useContext(MyThemeContext)
+  console.log('testMode', myTheme)
+  
   const todos = dummyTodoData;
-  console.log('todos', todos)
+
 
   // ?. Optional Chaining
   // Key with Map
@@ -38,7 +43,7 @@ export const TodoList = ({}) => {
 
   return (
     <>
-      <Container className='todo-list-container'>
+      <Container className={`todo-list-container theme_${myTheme?.mode}`}>
         {
           todos && todos.length > 0 && todos.map((todo, index) => {
 

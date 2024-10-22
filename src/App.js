@@ -1,55 +1,35 @@
-import { useState } from 'react';
-import './App.css';  
-import Button from './components/Button';
-import Modal from './components/Modal';
+import { createContext, useState } from 'react';
+import './App.css';
 import { Todo } from './components/todo/Todo';
+
+// Example of Context API
+
+// Created the context (1)
+export const MyThemeContext = createContext();
 
 function App() {
 
-  // States
-  // "use"
-  const [showModal, setShowModal] = useState(false)
-
-  // App (Parent) Component State
-  // Passing State as Props (Properties)
-  // Attritube
-
-  const myCustomData = 'This is a test string';
-  // const myCustomData = [];
-  // const myCustomData = {};
-  // const myCustomData = [{ name: "ravi", age: '20'}];
-  // Function click / event
-  // Updating the parent componet state by child component event
-
-  const handleShowModal = () => {
-    setShowModal(!showModal)
-  }
-
-  const handleHideModal = () => {
-    setShowModal(false)
+  // State Logic in App Component
+  const [myTheme, setMyTheme] = useState({ mode: 'light' });
+  const handleThemeToggle = () => {
+    const newMode = myTheme.mode == 'light' ? 'dark' : 'light';
+    const updatedThemeMode = { mode: newMode }
+    setMyTheme(updatedThemeMode)
   }
 
   return (
-    <> 
-     <Button onClick={() => handleShowModal()} data={myCustomData} title="Toggle Button">
-        Show Modal
-     </Button>
-     {/* {showModal && 
-      <Modal open={true} onClose={handleHideModal}></Modal>
-    } */}
-    
-      <Modal 
-        heading="Festival Offer"
-        open={showModal} 
-        onClose={handleHideModal}
-        buttonLabel={"Grap it Now!"}
-      >
-        <div>
-          <i>This is a limited time offer</i>
-        </div>
-      </Modal>
-     
-     <Todo />
+    <>
+
+      {/* Managing State  */}
+      <>
+        <button onClick={handleThemeToggle}>Dark/Light</button>
+        <p style={{ color: "#fff" }}>{myTheme.mode}</p>
+      </>
+
+      {/* Providing Context Data (2) */}
+      <MyThemeContext.Provider value={myTheme}>
+        <Todo />
+      </MyThemeContext.Provider>
     </>
   );
 }
