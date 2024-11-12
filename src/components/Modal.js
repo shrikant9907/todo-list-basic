@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from './Button';
+import { PiX } from 'react-icons/pi';
 
 // Overlay
 const ModalContainer = styled.div`
@@ -29,31 +30,45 @@ const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 14px;
+  position: relative;
 `;
 
 const HeadingStyled = styled.h2`
-    margin: 0;
-    font-size: 24px;
-    font-weight: 700;
+    margin: 0 0 10px 0;
+    font-size: 20px;
+    font-weight: 500;
 `;
 
-const Modal = ({ onClose, open, heading, children, buttonLabel }) => {
-    // console.log('onClose', onClose)
+const CrossIcon = styled.button`
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    border: none;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 15px;
+    cursor: pointer;
+    :hover {
+        color: red;
+    }
+`;
 
-    // Component Logic
+const Modal = ({ onClose, open, heading, children, footerComponent }) => {
 
     return (
         <>
             {open &&
                 <ModalContainer>
                     <ModalContent>
+                        <CrossIcon onClick={onClose}><PiX /></CrossIcon>
                         {heading &&
                             <HeadingStyled>{heading}</HeadingStyled>
                         }
                         <div>{children}</div>
-                        {buttonLabel &&
+                        {footerComponent &&
                             <div>
-                                <Button onClick={onClose} >{buttonLabel}</Button>
+                                {footerComponent}
                             </div>
                         }
                     </ModalContent>
