@@ -1,77 +1,57 @@
-import React, { useContext } from 'react';
-import styled from 'styled-components';
+import React from 'react';
 import './Todo.css';
-import { dummyTodoData } from './dummyData';
-import Button from '../Button';
-import { MyThemeContext } from '../../App';
+import { PiCheck, PiPencil, PiX } from "react-icons/pi";
+import { Tooltip } from 'react-tooltip'
 
-const Container = styled.main`
-  padding: 20px;
-  background: #efefef;
-  max-width: 700px;
-  margin:  50px auto 0 auto;
-`;
+export const TodoList = ({ }) => {
 
-const ListItem = styled.div`
-  padding: 10px;
-  border: 1px solid #ccc; 
-  border-radius: 4px;
-  margin-bottom: 15px;
-`;
-
-const Tag = styled.span`
-  padding: 5px 10px;
-  border: 1px solid #ccc;
-  display: inline-block;
-  border-radius: 50px;
-`;
-
-export const TodoList = ({}) => {
-
-  // Receiving Context Datav (3)
-  const myTheme = useContext(MyThemeContext)
-  console.log('testMode', myTheme)
-  
-  const todos = dummyTodoData;
-
-
-  // ?. Optional Chaining
-  // Key with Map
-  // 1. pass item id as key <ListItem key={todo.id}>
-  // 2. with litrals and key <ListItem key={`todo_item${index}`}>
-  // 3. generic id | index + title
+  const taskList = [1, 2, 3, 4, 5];
 
   return (
     <>
-      <Container className={`todo-list-container theme_${myTheme?.mode}`}>
-        {
-          todos && todos.length > 0 && todos.map((todo, index) => {
+      <div className='todo-list'>
+        <ul>
+          {
+            taskList && taskList.map(((task, index) =>
+              <li key={`list_item${index}`}>
+                {task} Test item text
+                <div className='todo-actions'>
+                  <button data-tooltip-id="button-check-mark" >
+                    <PiCheck />
+                  </button>
+                  <button data-tooltip-id="button-edit" >
+                    <PiPencil />
+                  </button>
+                  <button data-tooltip-id="button-delete" >
+                    <PiX />
+                  </button>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
 
-            const todoTitle = todo?.title;
-            const tag = todo?.completed ? "Completed" : "Todo";
+      <Tooltip
+        id="button-check-mark"
+        place="left"
+        content="Mark as Completed"
+      />
 
-            return <ListItem key={index + todo.title}>
-              <div> <h4>{todoTitle}</h4>
-                <Tag>{tag}</Tag></div>
-              <div><Button>Edit</Button>
-                <Button>Delete</Button></div>
-            </ListItem>
-          })
-        }
 
-        { todos && todos.length === 0 && <div>
-              You don't have any task yet.
-            </div>}
-      </Container>
+      <Tooltip
+        id="button-edit"
+        place="top"
+        content="Edit"
+      />
+
+
+      <Tooltip
+        id="button-delete"
+        place="top"
+        content="Delete"
+      />
+
     </>
   )
 }
-
-
-// Style Component
-
-// Bootstrap
-// Tailwind CSS
-// SCSS / sass
-// Material UI
-// Ant
