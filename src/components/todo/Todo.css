@@ -16,6 +16,24 @@ h6 {
    line-height: 1;
 }
 
+.btn {
+   border: 1px solid #ccc;
+   padding: 8px 15px;
+   border-radius: 10px;
+   cursor: pointer;
+}
+
+.btn.btn-disabled {
+   pointer-events: none;
+   filter:grayscale(100%);
+   opacity: 0.5;
+}
+
+.btn-primary {
+   background: #0078AA;
+   color: #fff;
+}
+
 
 /* Todo App CSS */
 .todo-app {
@@ -83,4 +101,10 @@ h6 {
    li:hover {
       background: rgb(244, 244, 250);
    }
+}
+
+.todo-header {
+   display:flex;
+   align-items: center;
+   justify-content: space-between;
 }

@@ -1,24 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'; 
+import './todo/Todo.css';
 
-const ButtonStyled = styled.button`
-  background: #071952;
-  color: #fff;
-  border: unset;
-  padding: 10px 15px;
-  border-radius: 10px;
-`;
- 
-const Button = ({ title, data, children, ...rest }) => {
-    // console.log('props', props)
-    // const { title, disabled } = props;
-    // const { title, data, children, ...rest } = props; // Destructuing, Rest
-    // console.log('buttonData', data)
+const Button = ({ children, className, ...rest }) => {
     return (
         <>
-            {/* <ButtonStyled disabled={props.disabled} title={props.title} >Custom Button</ButtonStyled> */}
-            {/* <ButtonStyled disabled={disabled} title={title} >Custom Button</ButtonStyled> */}
-            <ButtonStyled title={title} {...rest} >{children}</ButtonStyled>
+            <button className={`btn btn-primary ${className}`} {...rest} >{children}</button>
         </>
     )
 }
