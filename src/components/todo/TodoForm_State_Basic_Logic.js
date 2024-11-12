@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import './Todo.css';
 import Button from '../Button';
-import toast from 'react-hot-toast';
 
-export const TodoForm = ({ closeModal }) => {
+export const TodoForm = () => {
 
   const [formData, setFormData] = useState(null)
 
@@ -21,26 +20,18 @@ export const TodoForm = ({ closeModal }) => {
     return formData ? formData[name] : ""
   }
 
-  const handleOnFormSubmit = (e) => {
-    e.preventDefault();
-    toast.success('Successfully submitted!')
-    setFormData(null)
-    closeModal && closeModal();
-  }
-
   return (
     <>
       <pre>
         {JSON.stringify(formData)}
       </pre>
-      <form onSubmit={(e) => handleOnFormSubmit(e)} className='todo-form' autoComplete='off'>
+      <form onSubmit={() => console.log('Form submitted')} className='todo-form'>
         <div className='field-group'>
           <label>
             Task
           </label>
           <input
             type='text'
-            maxLength={70}
             // value={formData ? formData?.title : ""}
             value={getFieldValue('title')}
             name="title"
@@ -54,7 +45,6 @@ export const TodoForm = ({ closeModal }) => {
           </label>
           <input
             type='text'
-            maxLength={70}
             value={formData ? formData?.category : ""}
             name="category"
             placeholder='Enter your task category'
@@ -65,7 +55,6 @@ export const TodoForm = ({ closeModal }) => {
           <label>Description</label>
           <textarea
             name="description"
-            maxLength={2000}
             onChange={handleOnInputChange}
             value={formData ? formData?.description : ""}
             placeholder='Enter your task details.'>

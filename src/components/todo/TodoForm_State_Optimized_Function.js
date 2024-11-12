@@ -1,51 +1,39 @@
 import React, { useState } from 'react';
 import './Todo.css';
 import Button from '../Button';
-import toast from 'react-hot-toast';
 
-export const TodoForm = ({ closeModal }) => {
+export const TodoForm = () => {
 
   const [formData, setFormData] = useState(null)
 
-  const handleOnInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value })
-  }
+  const handleFormActions = (type = "change", name = null, event = null) => {
+    if (type === 'change') {
+      const { name, value } = event.target;
+      setFormData({ ...formData, [name]: value })
+      return
+    }
 
-  const resetForm = (e) => {
-    e.preventDefault();
-    setFormData(null)
-  }
-
-  const getFieldValue = (name) => {
+    if (type === 'reset') {
+      event.preventDefault();
+      setFormData(null)
+      return
+    }
     return formData ? formData[name] : ""
-  }
-
-  const handleOnFormSubmit = (e) => {
-    e.preventDefault();
-    toast.success('Successfully submitted!')
-    setFormData(null)
-    closeModal && closeModal();
   }
 
   return (
     <>
-      <pre>
-        {JSON.stringify(formData)}
-      </pre>
-      <form onSubmit={(e) => handleOnFormSubmit(e)} className='todo-form' autoComplete='off'>
+      <form onSubmit={() => console.log('Form submitted')} className='todo-form'>
         <div className='field-group'>
           <label>
             Task
           </label>
           <input
             type='text'
-            maxLength={70}
-            // value={formData ? formData?.title : ""}
-            value={getFieldValue('title')}
+            value={handleFormActions('title')}
             name="title"
             placeholder='Enter your task title'
-            onChange={handleOnInputChange}
+            onChange={(e) => handleFormActions("change", null, e)}
           />
         </div>
         <div className='field-group'>
@@ -54,19 +42,17 @@ export const TodoForm = ({ closeModal }) => {
           </label>
           <input
             type='text'
-            maxLength={70}
             value={formData ? formData?.category : ""}
             name="category"
             placeholder='Enter your task category'
-            onChange={handleOnInputChange}
+            onChange={(e) => handleFormActions("change", null, e)}
           />
         </div>
         <div className='field-group'>
           <label>Description</label>
           <textarea
             name="description"
-            maxLength={2000}
-            onChange={handleOnInputChange}
+            onChange={(e) => handleFormActions("change", null, e)}
             value={formData ? formData?.description : ""}
             placeholder='Enter your task details.'>
             {formData?.description}
@@ -74,7 +60,7 @@ export const TodoForm = ({ closeModal }) => {
         </div>
 
         <div className='todo-form-actions'>
-          <Button onClick={resetForm}>Reset</Button>
+          <Button onClick={(e) => handleFormActions('reset', null, e)}>Reset</Button>
           <Button>Submit</Button>
         </div>
       </form>
