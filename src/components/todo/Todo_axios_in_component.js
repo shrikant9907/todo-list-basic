@@ -7,7 +7,7 @@ import Button from '../Button';
 import Modal from '../Modal';
 import { ConfirmationModal } from '../ConfirmationModal';
 import toast, { Toaster } from 'react-hot-toast';
-import { addTodoAPI, fetchTodoAPI } from '../../services/todoApis';
+import axios from 'axios';
 
 
 // List Task (Add / Remove)
@@ -19,22 +19,21 @@ export const Todo = () => {
   const [showAddTaskModal, setShowAddTaskModal] = useState(false)
   const [todo, setTodo] = useState(null)
 
-  fetch('https://dummyjson.com/todos/add', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify()
-  })
-    .then(res => res.json())
-    .then(console.log);
+  const baseURL = "https://dummyjson.com"
+
+  const fetchTodoAPI = async () => {
+    const res = await axios.get(baseURL + "/todos");
+
+    if (res.status == 200) {
+      console.log('res', res)
+      setTodo(res.data)
+    } else {
+      toast.error('Unable to load todos')
+    }
+  }
 
   useEffect(() => {
-    fetchTodoAPI(setTodo)
-
-    addTodoAPI({
-      todo: 'Use DummyJSON in the project',
-      completed: false,
-      userId: 1,
-    }, setTodo)
+    fetchTodoAPI()
   }, [])
 
   const todoList = todo ? todo.todos : [];

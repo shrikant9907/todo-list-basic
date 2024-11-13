@@ -2,10 +2,33 @@ import React from 'react';
 import './Todo.css';
 import { PiCheck, PiPencil, PiX } from "react-icons/pi";
 import { Tooltip } from 'react-tooltip'
+import toast from 'react-hot-toast';
 
-export const TodoList = ({ }) => {
 
-  const taskList = [1, 2, 3, 4, 5];
+export const TodoList = ({ data, onDelete, onComplete, onEdit }) => {
+
+  const taskList = data;
+
+  const handleTaskActions = (task, type = "mark-complete") => {
+
+    if (type == "mark-complete") {
+      // Mark as Complete / Incomplete
+      onComplete ? onComplete(task) : toast.error("You didn't passed the onComplete Prop")
+      return
+    }
+
+    if (type == "edit") {
+      // Edit Task
+      onEdit && onEdit(task)
+      return
+    }
+
+    if (type == "delete") {
+      // Delete Task
+      onDelete && onDelete(task)
+      return
+    }
+  }
 
   return (
     <>
@@ -14,15 +37,22 @@ export const TodoList = ({ }) => {
           {
             taskList && taskList.map(((task, index) =>
               <li key={`list_item${index}`}>
-                {task} Test item text
+                {task?.id} - {task?.todo}
                 <div className='todo-actions'>
-                  <button data-tooltip-id="button-check-mark" >
+                  <button
+                    onClick={() => handleTaskActions(task)}
+                    data-tooltip-id="button-check-mark"
+                  >
                     <PiCheck />
                   </button>
-                  <button data-tooltip-id="button-edit" >
+                  <button
+                    onClick={() => handleTaskActions(task, "edit")}
+                    data-tooltip-id="button-edit" >
                     <PiPencil />
                   </button>
-                  <button data-tooltip-id="button-delete" >
+                  <button
+                    onClick={() => handleTaskActions(task, "delete")}
+                    data-tooltip-id="button-delete" >
                     <PiX />
                   </button>
                 </div>
