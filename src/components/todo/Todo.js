@@ -5,9 +5,10 @@ import { TodoList } from './TodoList';
 import './Todo.css';
 import Button from '../Button';
 import Modal from '../Modal';
-import { ConfirmationModal } from '../ConfirmationModal';
+// import { ConfirmationModal } from '../ConfirmationModal';
 import toast, { Toaster } from 'react-hot-toast';
-import { addTodoAPI, fetchTodoAPI } from '../../services/todoApis';
+import { deleteTodoAPI, fetchTodoAPI, updateTodoAPI } from '../../services/todoApis';
+import { TodoEditForm } from './TodoEditForm';
 
 
 // List Task (Add / Remove)
@@ -17,39 +18,27 @@ import { addTodoAPI, fetchTodoAPI } from '../../services/todoApis';
 export const Todo = () => {
 
   const [showAddTaskModal, setShowAddTaskModal] = useState(false)
+  const [showEditTaskModal, setShowEditTaskModal] = useState(false)
   const [todo, setTodo] = useState(null)
-
-  fetch('https://dummyjson.com/todos/add', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify()
-  })
-    .then(res => res.json())
-    .then(console.log);
+  const [editTaskData, setEditTaskData] = useState(null)
 
   useEffect(() => {
     fetchTodoAPI(setTodo)
-
-    addTodoAPI({
-      todo: 'Use DummyJSON in the project',
-      completed: false,
-      userId: 1,
-    }, setTodo)
   }, [])
 
   const todoList = todo ? todo.todos : [];
 
   const handleOnCompleteTask = (data) => {
-    toast('Marked as completed')
+    updateTodoAPI(data.id, { completed: true }, setTodo)
   }
 
   const handleOnEditTask = (data) => {
-    toast('Editing task')
+    setEditTaskData(data)
+    setShowEditTaskModal(true)
   }
 
   const handleOnDeleteTask = (data) => {
-    toast('Asked for deletion')
-    console.log('on delete', data)
+    deleteTodoAPI(data.id, setTodo)
   }
 
   return (
@@ -75,7 +64,24 @@ export const Todo = () => {
           open={showAddTaskModal}
           heading={"Add Task Form"}
         >
-          <TodoForm closeModal={() => setShowAddTaskModal(false)} />
+          <TodoForm
+            closeModal={() => setShowAddTaskModal(false)}
+            setTodo={setTodo}
+          />
+        </Modal>
+      }
+
+      {showEditTaskModal &&
+        <Modal
+          onClose={() => setShowEditTaskModal(false)}
+          open={showEditTaskModal}
+          heading={"Edit Task Form"}
+        >
+          <TodoEditForm
+            closeModal={() => setShowEditTaskModal(false)}
+            setTodo={setTodo}
+            taskData={editTaskData}
+          />
         </Modal>
       }
 

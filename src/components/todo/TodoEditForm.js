@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import './Todo.css';
 import Button from '../Button';
-import { addTodoAPI } from '../../services/todoApis';
+import { updateTodoAPI } from '../../services/todoApis';
 
-export const TodoForm = ({ closeModal, setTodo }) => {
+export const TodoEditForm = ({ closeModal, setTodo, taskData }) => {
 
-  const [formData, setFormData] = useState(null)
+  const [formData, setFormData] = useState(taskData)
 
   const handleOnInputChange = (event) => {
     const { name, value } = event.target;
@@ -14,7 +14,7 @@ export const TodoForm = ({ closeModal, setTodo }) => {
 
   const resetForm = (e) => {
     e.preventDefault();
-    setFormData(null)
+    setFormData(taskData)
   }
 
   const getFieldValue = (name) => {
@@ -23,7 +23,6 @@ export const TodoForm = ({ closeModal, setTodo }) => {
 
   const handleOnFormSubmit = (e) => {
     e.preventDefault();
-    // toast.success('Successfully submitted!')
 
     const requestData = {
       todo: formData?.title,
@@ -31,9 +30,9 @@ export const TodoForm = ({ closeModal, setTodo }) => {
       userId: 1,
     }
 
-    addTodoAPI(requestData, setTodo)
+    updateTodoAPI(taskData.id, requestData, setTodo)
 
-    setFormData(null)
+    // setFormData(taskData)
     closeModal && closeModal();
   }
 
