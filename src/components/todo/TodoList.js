@@ -1,31 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Todo.css';
 import { PiCheck, PiPencil, PiX } from "react-icons/pi";
 import { Tooltip } from 'react-tooltip'
 import toast from 'react-hot-toast';
+import { useTodo } from '../../context/todoContext';
+import { fetchTodoAPI, updateTodoAPI, deleteTodoAPI } from "../../services/todoApis"
 
+export const TodoList = () => {
 
-export const TodoList = ({ data, onDelete, onComplete, onEdit }) => {
+  const { todoList, setShowDeleteConfirmation, setDeleteTaskData, setTodo, setShowEditTaskModal, setEditTaskData } = useTodo();
 
-  const taskList = data;
+  useEffect(() => {
+    fetchTodoAPI(setTodo)
+  }, [])
 
   const handleTaskActions = (task, type = "mark-complete") => {
 
     if (type == "mark-complete") {
-      // Mark as Complete / Incomplete
-      onComplete ? onComplete(task) : toast.error("You didn't passed the onComplete Prop")
+      updateTodoAPI(task.id, { completed: true }, setTodo)
       return
     }
 
     if (type == "edit") {
-      // Edit Task
-      onEdit && onEdit(task)
+      setShowEditTaskModal(true)
+      setEditTaskData(task)
       return
     }
 
     if (type == "delete") {
-      // Delete Task
-      onDelete && onDelete(task)
+      setShowDeleteConfirmation(true)
+      setDeleteTaskData(task)
       return
     }
   }
@@ -35,7 +39,7 @@ export const TodoList = ({ data, onDelete, onComplete, onEdit }) => {
       <div className='todo-list'>
         <ul>
           {
-            taskList && taskList.map(((task, index) =>
+            todoList && todoList.map(((task, index) =>
               <li key={`list_item${index}`}>
                 <span>{task?.id})</span> <span className='task-text'>{task?.todo}</span>
                 <div className='todo-actions'>

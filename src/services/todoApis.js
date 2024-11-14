@@ -48,11 +48,12 @@ export const updateTodoAPI = async (id, data, setData) => {
     }
 }
 
-export const deleteTodoAPI = async (id, setData) => {
+export const deleteTodoAPI = async (id, setData, successCallback) => {
     try {
         const res = await axios.delete(`/todos/${id}`);
         if (res.status === 200) {
             fetchTodoAPI(setData, 'Task deleted successfully.'); // Will update the list
+            successCallback && successCallback()
         } else {
             toast.error('Unable to load todos')
         }

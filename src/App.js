@@ -1,5 +1,6 @@
 
 import { Todo } from './components/todo/Todo';
+import TodoContextProvider from './context/todoContext';
 
 
 function App() {
@@ -7,7 +8,9 @@ function App() {
 
   return (
     <>
-      <Todo />
+      <TodoContextProvider>
+        <Todo />
+      </TodoContextProvider>
     </>
   );
 }

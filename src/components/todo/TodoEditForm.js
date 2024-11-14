@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import './Todo.css';
 import Button from '../Button';
 import { updateTodoAPI } from '../../services/todoApis';
+import { useTodo } from '../../context/todoContext';
 
-export const TodoEditForm = ({ closeModal, setTodo, taskData }) => {
+export const TodoEditForm = () => {
 
-  const [formData, setFormData] = useState(taskData)
+  const { setTodo, setShowEditTaskModal, editTaskData } = useTodo();
+
+  const [formData, setFormData] = useState(editTaskData)
 
   const handleOnInputChange = (event) => {
     const { name, value } = event.target;
@@ -14,7 +17,7 @@ export const TodoEditForm = ({ closeModal, setTodo, taskData }) => {
 
   const resetForm = (e) => {
     e.preventDefault();
-    setFormData(taskData)
+    setFormData(editTaskData)
   }
 
   const getFieldValue = (name) => {
@@ -25,15 +28,14 @@ export const TodoEditForm = ({ closeModal, setTodo, taskData }) => {
     e.preventDefault();
 
     const requestData = {
-      todo: formData?.title,
+      todo: formData?.todo,
       completed: false,
       userId: 1,
     }
 
-    updateTodoAPI(taskData.id, requestData, setTodo)
+    updateTodoAPI(editTaskData.id, requestData, setTodo)
 
-    // setFormData(taskData)
-    closeModal && closeModal();
+    setShowEditTaskModal(false)
   }
 
   return (
@@ -46,10 +48,9 @@ export const TodoEditForm = ({ closeModal, setTodo, taskData }) => {
           <input
             type='text'
             maxLength={70}
-            // value={formData ? formData?.title : ""}
-            value={getFieldValue('title')}
-            name="title"
-            placeholder='Enter your task title'
+            value={getFieldValue('todo')}
+            name="todo"
+            placeholder='Enter your task todo'
             onChange={handleOnInputChange}
           />
         </div>

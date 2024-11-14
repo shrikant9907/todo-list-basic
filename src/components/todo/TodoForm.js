@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import './Todo.css';
 import Button from '../Button';
 import { addTodoAPI } from '../../services/todoApis';
+import { useTodo } from '../../context/todoContext';
 
-export const TodoForm = ({ closeModal, setTodo }) => {
+export const TodoForm = () => {
+
+  const { setTodo, setShowAddTaskModal } = useTodo();
 
   const [formData, setFormData] = useState(null)
 
@@ -23,7 +26,6 @@ export const TodoForm = ({ closeModal, setTodo }) => {
 
   const handleOnFormSubmit = (e) => {
     e.preventDefault();
-    // toast.success('Successfully submitted!')
 
     const requestData = {
       todo: formData?.title,
@@ -34,7 +36,7 @@ export const TodoForm = ({ closeModal, setTodo }) => {
     addTodoAPI(requestData, setTodo)
 
     setFormData(null)
-    closeModal && closeModal();
+    setShowAddTaskModal(false)
   }
 
   return (
