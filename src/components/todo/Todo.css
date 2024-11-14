@@ -7,6 +7,7 @@ body {
    font-family: "Roboto", sans-serif;
    font-weight: 400;
    font-style: normal;
+   margin: 0;
 }
 
 h1,
@@ -45,10 +46,19 @@ h6 {
 .todo-app {
    background: #fff;
    font-size: 16px;
+   margin: 0 auto;
+   max-width: 768px;
 
    h1 {
       text-align: center;
    }
+}
+
+.todo-list {
+   height: calc(100vh - 87px);
+   overflow: hidden;
+   overflow-y: auto;
+   font-size: 14px;
 }
 
 .todo-list ul {
@@ -62,7 +72,19 @@ h6 {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-top: 1px solid #ccc;
+      border-bottom: 1px solid #efefef;
+      gap: 10px;
+
+      >span {
+         width: 20px;
+         text-align: right;
+      }
+
+      .task-text {
+         text-align: left;
+         flex-grow: 1;
+         line-height: 20px;
+      }
 
       .todo-actions {
          display: flex;
@@ -113,6 +135,18 @@ h6 {
    display: flex;
    align-items: center;
    justify-content: space-between;
+   border-bottom: 1px solid #efefef;
+   padding: 0 15px;
+
+   h1 {
+      font-size: 20px;
+   }
+}
+
+.todo-footer {
+   padding: 10px 15px;
+   color: #707070;
+   text-align: center;
 }
 
 .todo-form {

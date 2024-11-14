@@ -37,7 +37,7 @@ export const TodoList = ({ data, onDelete, onComplete, onEdit }) => {
           {
             taskList && taskList.map(((task, index) =>
               <li key={`list_item${index}`}>
-                {task?.id} - {task?.todo}
+                <span>{task?.id})</span> <span className='task-text'>{task?.todo}</span>
                 <div className='todo-actions'>
                   <button
                     onClick={() => handleTaskActions(task)}

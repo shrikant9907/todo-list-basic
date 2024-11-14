@@ -54,6 +54,9 @@ export const Todo = () => {
           onEdit={handleOnEditTask}
           onComplete={handleOnCompleteTask}
         />
+        <div className="todo-footer">
+          <small>&copy; 2024 All rights reserved. Shrimo Innovations Pvt Ltd.</small>
+        </div>
       </div>
 
       {/* Add Task Modal */}
